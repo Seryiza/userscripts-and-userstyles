@@ -1,7 +1,10 @@
 // ==UserScript==
 // @name Save video quality on Kinopoisk
+// @desctiption Save video quality on Kinopoisk
+// @copyright 2019, Seryiza (https://seryiza.xyz)
 // @namespace Kinopoisk
 // @version 2019.07.25
+// @license MIT
 // @run-at document-end
 // @match https://yastatic.net/yandex-video-player-iframe-api-bundles/*
 // match https://ott-widget.kinopoisk.ru/v1/kp/*
