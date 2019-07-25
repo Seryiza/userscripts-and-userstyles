@@ -1,6 +1,10 @@
 # Автоматическая установка не-авто качества видео на Кинопоиске
 ![Скриншот панельки на Кинопоиске](./screenshot.png)
 
+## Установка
+* [OpenUserJS](https://openuserjs.org/scripts/Seryiza/Save_video_quality_on_Kinopoisk)
+* [GitHub](https://github.com/Seryiza/userscripts-and-userstyles/raw/master/KinopoiskVideoQuality/save-video-quality-on-kinopoisk.user.js)
+
 ## Что это?
 Скрипт для установки строго определённого разрешения видео на сервисе Кинопоиск Онлайн.
 
@@ -11,3 +15,4 @@
 - [ ] Добавить пользовательские предпочтения по качеству
 - [ ] Скрывать окно настроек во время работы скрипта
 - [ ] Рефакторинг
+- [ ] Разобраться с OpenUserJS и поправить автообновление, если оно не работает
