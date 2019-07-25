@@ -1,2 +1,5 @@
-# userscripts-and-userstyles
-My userscripts and userstyles
+# Userscripts and Userstyles
+Репозиторий моих скриптов и стилей для некоторых ресурсов. Делаю жизнь лучше для самого себя :P
+
+## Список
+* [Установка качества видео на Кинопоиск Онлайн](./KinopoiskVideoQuality)
