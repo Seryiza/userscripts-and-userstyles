@@ -9,4 +9,4 @@
 // @require https://github.com/Seryiza/userscripts-and-userstyles/raw/master/HotkeyHandler/hotkey-handler.user.js
 // ==/UserScript==
 
-handleHotkey(['Control', 'm'], () => alert('Ok!'));
+handleHotkey(['ControlLeft', 'KeyM'], () => alert('Ok!'));
