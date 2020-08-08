@@ -1,11 +1,17 @@
 // ==UserScript==
+// @exclude *
+//
+// ==UserLibrary==
 // @name Hotkey Handler
 // @description Library to handle keyboard hotkeys.
-// @author Seryiza
 // @copyright 2020, Sergey Zaborovsky (seryiza.xyz)
-// @licence MIT
+// @license MIT
 // @version 1.0.2
-// @exclude *
+// ==/UserLibrary==
+
+// ==OpenUserJs==
+// @author Seryiza
+// ==/OpenUserJs==
 // ==/UserScript==
 
 const handlers = [];
