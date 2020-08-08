@@ -1,154 +1,67 @@
 // ==UserScript==
-// @name Save video quality on Kinopoisk
-// @desctiption Save video quality on Kinopoisk
-// @copyright 2019, Seryiza (https://seryiza.xyz)
+// @name Kinopoisk Video Quality Setter
+// @description Set the video quality on Kinopoisk automatically.
+// @copyright 2020, Seryiza (https://seryiza.xyz)
 // @namespace Kinopoisk
-// @version 2019.07.25
+// @version 2020.08.09
 // @license MIT
 // @run-at document-end
 // @match https://yastatic.net/yandex-video-player-iframe-api-bundles/*
-// match https://ott-widget.kinopoisk.ru/v1/kp/*
+// @require https://github.com/Seryiza/userscripts-and-userstyles/raw/master/DOMWaiter/dom-waiter.user.js
 // @grant none
 // ==/UserScript==
 
-/**
- * Selectors for player elements
- */
 const selectors = {
-  'player': '._25odpnh._20Eh5WL',
-  'settings-button': '._8jA5WLv ._26vKJrq',
-  'settings': '._3Wx8FeC',
-  'settings-selects': '._3Wx8FeC ._3ICAqZl',
-  'settings-select-label': '.FqwavqE',
-  'video-quality-list-title': '._3Wx8FeC ._3ICAqZl:first-of-type .FqwavqE',
-  'video-quality-items': '._3Wx8FeC ._3ICAqZl:nth-of-type(n + 2)',
-  'video-quality-label': '.FqwavqE',
+  'player': 'video',
+  'settings-button': '._2xB4hUF .T6js1xi:nth-of-type(2)',
+  'settings-select-label': '._1ML4B9X.q91zlOj ._2lty85i',
 };
 
-/**
- * Label of list select for video quality.
- * Note: only in Russian currently.
- */
-const VIDEO_QUALITY_SELECT_LABEL = 'Качество';
+const wait = new Waiter(findKinopoiskElement);
+const click = (el) => el.click();
 
-// Helper functions
-const query = (selectorName, parent = document) => parent.querySelector(selectors[selectorName]);
-const queryAll = (selectorName, parent = document) => parent.querySelectorAll(selectors[selectorName]);
-const matches = (elem, selectorName) => elem.matches(selectors[selectorName]);
+onPlayerUpdate(document.querySelector(selectors['player']), () => {
+  setVideoQuality();
+});
 
-const lock = (fn) => {
-  let isLocked = false;
-  const unlock = () => {
-    isLocked = false;
-  };
+// TODO: Add user preferences.
+function setVideoQuality(bestQuality = 720) {
+  wait('settings-button')
+      .then(click)
+      .then(() => wait('settings-select-label', 'Качество'))
+      .then(click)
+      .then(() => wait('settings-select-label'))
+      .then((elements) => getLessOrEqualVideoQualities(elements, bestQuality))
+      .then((qualities) => {
+          if (!qualities.length) {
+              throw new Error('Video quality was not picked.');
+          }
 
-  return () => {
-    if (isLocked) {
-      return;
-    }
-    isLocked = true;
-    fn(unlock);
-  };
+          click(qualities[0]);
+      });
 };
 
-/**
- * States of userscript algorithm
- */
-const states = {
-  start: () => 'openSettings',
-
-  openSettings: () => {
-    // TODO: Hide settings popup
-    const settingsButton = query('settings-button');
-    if (!settingsButton) {
-      return 'openSettings';
-    }
-
-    const settings = query('settings');
-    if (!settings) {
-      settingsButton.click();
-    }
-    return 'openVideoQualityList';
-  },
-
-  openVideoQualityList: () => {
-    const settingsSelects = queryAll('settings-selects');
-    const videoQualitySelect = Array.from(settingsSelects).find(select => {
-      const label = query('settings-select-label', select).textContent;
-      return label === VIDEO_QUALITY_SELECT_LABEL;
-    });
-
-    if (videoQualitySelect) {
-      videoQualitySelect.click();
-    }
-    return videoQualitySelect ? 'selectRequiredVideoQuality' : 'openVideoQualityList';
-  },
-
-  selectRequiredVideoQuality: () => {
-    const listTitle = query('video-quality-list-title');
-    const isLoaded = listTitle.textContent === VIDEO_QUALITY_SELECT_LABEL;
-    if (!isLoaded) {
-      return 'selectRequiredVideoQuality';
-    }
-
-    const videoQualityItems = queryAll('video-quality-items');
-    // TODO: Add user preferences for quality.
-    const favoriteQuality = 720;
-    const videoQualityItem = Array.from(videoQualityItems).find(item => {
-      const label = query('video-quality-label', item);
-      const currentQuality = parseInt(label.textContent);
-      return currentQuality <= favoriteQuality;
-    });
-
-    videoQualityItem.click();
-    return 'closeSettings';
-  },
-
-  closeSettings: () => 'end',
-};
-
-/**
- * Update current video quality.
- */
-const updateVideoQuality = (unlock) => {
-  let state = 'start';
-
-  const settingsObserver = new MutationObserver(() => {
-    state = states[state]();
-    if (state === 'end') {
-      unlock();
-      settingsObserver.disconnect();
-    }
-  });
-
-  settingsObserver.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-};
-
-/**
- * Lock the function because MutationObserver can call function multiple times.
- */
-const lockedUpdateVideoQuality = lock(updateVideoQuality);
-
-const observer = new MutationObserver((records) => {
-  const isPlayerChanged = records.reduce((isPlayer, record) => {
-    // TODO: Refactor this
-    const isCurrentPlayer = matches(record.target, 'player');
-    const isChanged = (record.attributeName === 'src') && (record.target.getAttribute('src') !== null);
-    return isPlayer || (isCurrentPlayer && isChanged);
-  }, false);
-
-  if (!isPlayerChanged) {
-    return;
+function findKinopoiskElement(componentName, root = document) {
+  if (!(componentName in selectors)) {
+      throw new Error('Kinopoisk selector not found: ' + componentName);
   }
 
-  lockedUpdateVideoQuality();
-});
+  return Array.from(
+      root.querySelectorAll(selectors[componentName])
+  );
+}
 
-observer.observe(document.body, {
-  childList: true,
-  subtree: true,
-  attributes: true,
-});
+function getLessOrEqualVideoQualities(labels, expectingQuality) {
+  return labels.filter(label => {
+      const quality = parseInt(label.textContent);
+      return !isNaN(quality) && quality <= expectingQuality;
+  });
+};
+
+function onPlayerUpdate(player, fn) {
+  const observer = new MutationObserver(fn);
+  observer.observe(player, {
+      attributes: true,
+      attributeFilter: ['src'],
+  });
+}
