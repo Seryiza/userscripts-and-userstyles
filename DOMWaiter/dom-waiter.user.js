@@ -1,5 +1,6 @@
 // ==UserScript==
 // @exclude *
+// @downloadURL https://github.com/Seryiza/userscripts-and-userstyles/raw/master/DOMWaiter/dom-waiter.user.js
 // @updateURL https://github.com/Seryiza/userscripts-and-userstyles/raw/master/DOMWaiter/dom-waiter.user.js
 //
 // ==UserLibrary==
