@@ -7,7 +7,7 @@
 // @license MIT
 // @run-at document-end
 // @match https://yastatic.net/yandex-video-player-iframe-api-bundles/*
-// @require https://github.com/Seryiza/userscripts-and-userstyles/raw/master/DOMWaiter/dom-waiter.user.js
+// @require https://github.com/Seryiza/userscripts-and-userstyles/raw/master/DOMWaiter/dom-waiter.js
 // @grant none
 // ==/UserScript==
 
