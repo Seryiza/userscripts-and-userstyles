@@ -6,7 +6,7 @@
 // @licence MIT
 // @version 1.0.0
 // @include https://github.com/Seryiza/userscripts-and-userstyles
-// @require https://github.com/Seryiza/userscripts-and-userstyles/raw/master/HotkeyHandler/hotkey-handler.user.js
+// @require https://github.com/Seryiza/userscripts-and-userstyles/raw/master/HotkeyHandler/hotkey-handler.js
 // ==/UserScript==
 
 handleHotkey(['ControlLeft', 'KeyM'], () => alert('Ok!'));
