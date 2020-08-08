@@ -4,7 +4,7 @@
 // @author Seryiza
 // @copyright 2020, Sergey Zaborovsky (seryiza.xyz)
 // @licence MIT
-// @version 1.0.0
+// @version 1.0.1
 // @exclude *
 // ==/UserScript==
 
@@ -36,10 +36,16 @@
         const keyCode = event.code;
         pressedCodes.add(keyCode);
 
+        let wasAnyHandlerCalled = false;
         for (let {handler, keyCodes} of handlers) {
             if (areSetsEquals(keyCodes, pressedCodes)) {
                 handler();
+                wasAnyHandlerCalled = true;
             }
+        }
+
+        if (wasAnyHandlerCalled) {
+            pressedCodes.clear();
         }
     });
 
