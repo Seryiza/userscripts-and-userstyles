@@ -1,5 +1,6 @@
 // ==UserScript==
 // @exclude *
+// @updateURL https://github.com/Seryiza/userscripts-and-userstyles/raw/master/DOMWaiter/dom-waiter.user.js
 //
 // ==UserLibrary==
 // @name DOM Waiter
