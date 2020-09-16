@@ -2,7 +2,7 @@
 ![Скриншот панельки на Кинопоиске](./screenshot.png)
 
 ## Установка
-* [OpenUserJS](https://openuserjs.org/scripts/Seryiza/Save_video_quality_on_Kinopoisk)
+* [OpenUserJS](https://openuserjs.org/scripts/Seryiza/Kinopoisk_Video_Quality_Setter)
 * [GitHub](https://github.com/Seryiza/userscripts-and-userstyles/raw/master/KinopoiskVideoQuality/save-video-quality-on-kinopoisk.user.js)
 
 ## Что это?
