@@ -3,13 +3,15 @@
 // @description Set the video quality on Kinopoisk automatically.
 // @copyright 2020, Seryiza (https://seryiza.xyz)
 // @namespace Kinopoisk
-// @version 2020.08.09
+// @version 2020.09.16
 // @license MIT
 // @run-at document-end
 // @match https://yastatic.net/yandex-video-player-iframe-api-bundles/*
 // @require https://github.com/Seryiza/userscripts-and-userstyles/raw/master/DOMWaiter/dom-waiter.js
-// @grant none
+// @grant GM_getValue
 // ==/UserScript==
+
+const DEFAULT_BEST_VIDEO_QUALITY = 720;
 
 const selectors = {
   'player': 'video',
@@ -21,10 +23,10 @@ const wait = new Waiter(findKinopoiskElement);
 const click = (el) => el.click();
 
 onPlayerUpdate(document.querySelector(selectors['player']), () => {
-  setVideoQuality();
+  const bestQuality = GM_getValue('bestVideoQuality', DEFAULT_BEST_VIDEO_QUALITY);
+  setVideoQuality(bestQuality);
 });
 
-// TODO: Add user preferences.
 function setVideoQuality(bestQuality = 720) {
   wait('settings-button')
       .then(click)
