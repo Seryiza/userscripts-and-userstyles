@@ -3,7 +3,7 @@
 // @description Set the video quality on Kinopoisk automatically.
 // @copyright 2020, Seryiza (https://seryiza.xyz)
 // @namespace Kinopoisk
-// @version 2020.09.16
+// @version 2020.11.3
 // @license MIT
 // @run-at document-end
 // @match https://yastatic.net/yandex-video-player-iframe-api-bundles/*
