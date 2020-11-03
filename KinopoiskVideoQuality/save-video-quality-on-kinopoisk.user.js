@@ -15,7 +15,7 @@ const DEFAULT_BEST_VIDEO_QUALITY = 720;
 
 const selectors = {
   'player': 'video',
-  'settings-button': '._2xB4hUF .T6js1xi:nth-of-type(2)',
+  'settings-button': 'button[aria-label="Настройки"]:first-of-type',
   'settings-select-label': '._1ML4B9X.q91zlOj ._2lty85i',
 };
 
