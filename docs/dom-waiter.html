@@ -18,19 +18,23 @@
 
         function test() {
             const waitFn = window.wait;
+            const waitOneFn = window.waitOne;
 
-            if (!waitFn) {
-                console.error('Функция wait не найдена.');
+            if (!waitFn || !waitOneFn) {
+                console.error('Требуемые функции не найдены.');
                 return;
             }
 
             waitFn(document.body, 'h1')
-                .then((elem) => console.log('Один элемент найден.', elem));
+                .then((elems) => console.log('Один элемент найден.', elems));
 
             waitFn(document.body, 'p')
-                .then((elem) => console.log('Несколько элементов найдено.', elem));
-                
-            waitFn(document.body, 'button')
+                .then((elems) => console.log('Несколько элементов найдено.', elems));
+
+            waitOneFn(document.body, 'p')
+                .then((elem) => console.log('Один из нескольких элементов найден.', elem));
+
+            waitOneFn(document.body, 'button')
                 .then((elem) => console.log('Динамический элемент найден.', elem));
 
             const buttonParent = document.querySelector('div');
