@@ -13,14 +13,20 @@
 
     <div></div>
 
+    <article>
+        <span>Hello</span>
+        <span>Hi</span>
+    </article>
+
     <script>
         const USERSCRIPT_LOAD_TIME = 250;
 
         function test() {
             const waitFn = window.wait;
             const waitOneFn = window.waitOne;
+            const applyFn = window.apply;
 
-            if (!waitFn || !waitOneFn) {
+            if (!waitFn || !waitOneFn || !applyFn) {
                 console.error('Требуемые функции не найдены.');
                 return;
             }
@@ -39,6 +45,14 @@
 
             const buttonParent = document.querySelector('div');
             setTimeout(() => buttonParent.innerHTML = '<button>Click</button>', 1000);
+
+            const anyElements = () => true;
+            applyFn(document.body, 'span', anyElements, (elem) => {
+                elem.textContent = `${elem.textContent}, World!`;
+            });
+
+            const spanParent = document.querySelector('article');
+            setTimeout(() => spanParent.innerHTML += '<span>Greetings</span>', 1000);
         }
 
         setTimeout(() => test(), USERSCRIPT_LOAD_TIME);
