@@ -8,6 +8,11 @@
 <body>
     <h1>Hello</h1>
 
+    <p>First</p>
+    <p>Second</p>
+
+    <div></div>
+
     <script>
         const USERSCRIPT_LOAD_TIME = 250;
 
@@ -20,13 +25,19 @@
             }
 
             waitFn(document.body, 'h1')
-                .then((elem) => console.log('Элемент найден.', elem));
+                .then((elem) => console.log('Один элемент найден.', elem));
+
+            waitFn(document.body, 'p')
+                .then((elem) => console.log('Несколько элементов найдено.', elem));
+                
+            waitFn(document.body, 'button')
+                .then((elem) => console.log('Динамический элемент найден.', elem));
+
+            const buttonParent = document.querySelector('div');
+            setTimeout(() => buttonParent.innerHTML = '<button>Click</button>', 1000);
         }
 
-        setTimeout(
-            () => test(),
-            USERSCRIPT_LOAD_TIME
-        );
+        setTimeout(() => test(), USERSCRIPT_LOAD_TIME);
     </script>
 </body>
 </html>
