@@ -7,5 +7,21 @@
 </head>
 <body>
     <h1>Hello</h1>
+
+    <script>
+        function test() {
+            const waitFn = window.wait;
+
+            if (!waitFn) {
+                console.error('Функция wait не найдена.');
+                return;
+            }
+
+            waitFn(document.body, 'h1')
+                .then((elem) => console.log('Элемент найден.', elem));
+        }
+
+        test();
+    </script>
 </body>
 </html>
