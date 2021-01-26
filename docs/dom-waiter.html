@@ -9,6 +9,8 @@
     <h1>Hello</h1>
 
     <script>
+        const USERSCRIPT_LOAD_TIME = 250;
+
         function test() {
             const waitFn = window.wait;
 
@@ -21,7 +23,10 @@
                 .then((elem) => console.log('Элемент найден.', elem));
         }
 
-        test();
+        setTimeout(
+            () => test(),
+            USERSCRIPT_LOAD_TIME
+        );
     </script>
 </body>
 </html>
