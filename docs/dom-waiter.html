@@ -18,6 +18,8 @@
         <span>Hi</span>
     </article>
 
+    <aside></aside>
+
     <script>
         const USERSCRIPT_LOAD_TIME = 250;
 
@@ -51,8 +53,8 @@
                 elem.textContent = `${elem.textContent}, World!`;
             });
 
-            const spanParent = document.querySelector('article');
-            setTimeout(() => spanParent.innerHTML += '<span>Greetings</span>', 1000);
+            const spanParent = document.querySelector('aside');
+            setTimeout(() => spanParent.innerHTML = '<span>Greetings</span>', 1000);
         }
 
         setTimeout(() => test(), USERSCRIPT_LOAD_TIME);
